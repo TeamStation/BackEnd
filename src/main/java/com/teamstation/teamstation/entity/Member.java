@@ -25,7 +25,8 @@ public class Member {
 
     private String userName;
 
-    public void encodePassword(PasswordEncoder passwordEncoder) {
+    public void encodePassword(PasswordEncoder passwordEncoder){
         this.password = passwordEncoder.encode(password);
     }
+
 }

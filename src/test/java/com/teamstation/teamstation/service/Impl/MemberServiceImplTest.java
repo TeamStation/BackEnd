@@ -67,7 +67,7 @@ class MemberServiceImplTest {
     public void passwordTest() throws Exception {
         MemberSignUpRequestDto member2 = createMember2();
 
-        Throwable e = assertThrows(IllegalStateException.class, () -> {
+        Throwable e = assertThrows(IllegalArgumentException.class, () -> {
             memberService.signUp(member2);});
 
         assertEquals("비밀번호가 일치하지 않습니다.", e.getMessage());

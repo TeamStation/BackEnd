@@ -23,7 +23,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public MemberDto signUp(MemberSignUpRequestDto requestDto) throws Exception {
         if(!requestDto.getPassword().equals(requestDto.getCheckedPassword())){
-            throw new IllegalStateException("비밀번호가 일치하지 않습니다.");
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
         validateDuplicateMember(requestDto);
 

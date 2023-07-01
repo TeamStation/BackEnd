@@ -5,8 +5,6 @@ import com.teamstation.teamstation.entity.Member;
 import com.teamstation.teamstation.entity.Project;
 import com.teamstation.teamstation.entity.ProjectTodo;
 import com.teamstation.teamstation.entity.Todo;
-import com.teamstation.teamstation.repository.MemberRepository;
-import com.teamstation.teamstation.repository.ProjectRepository;
 import com.teamstation.teamstation.repository.ProjectTodoRepository;
 import com.teamstation.teamstation.service.MemberService;
 import com.teamstation.teamstation.service.ProjectService;
@@ -70,7 +68,7 @@ public class ProjectTodoController {
 
     // ProjectTodo 생성 API
     @PostMapping(value="/{projectId}/todos/create")
-    public ResponseEntity<String> createProjectTodo(@PathVariable("projectId") Long projectId, @RequestBody ProjectTodoRequestDTO requestDTO) {
+    public ResponseEntity<String> createProjectTodo(@PathVariable("projectId") Long projectId, @RequestBody ProjectTodoRequestDto requestDTO) {
         // 1. 프로젝트 조회
         Project project = projectService.getProjectById(projectId);
         if (project == null) {
@@ -114,14 +112,14 @@ public class ProjectTodoController {
 
     // ProjectTodo 수정 API
     @PutMapping(value="/{projectId}/todos/{todoId}")
-    public ResponseEntity<String> updateTodoByProject(@PathVariable Long projectId, @PathVariable Long todoId, @RequestBody ProjectTodoDTO projectTodoDTO) {
+    public ResponseEntity<String> updateTodoByProject(@PathVariable Long projectId, @PathVariable Long todoId, @RequestBody ProjectTodoDto projectTodoDTO) {
         // projectId에 해당하는 프로젝트 할 일 목록을 조회합니다.
         List<ProjectTodo> todos = projectTodoRepository.findByProjectId(projectId);
         Optional<ProjectTodo> optionalProjectTodo = todos.stream()
                 .filter(todo -> todo.getId().equals(todoId))
                 .findFirst();
 
-        if (optionalProjectTodo.isEmpty()) {
+        if (!optionalProjectTodo.isPresent()) {
             // 요청된 todoId에 해당하는 프로젝트 할 일을 찾을 수 없을 경우 404 상태 코드 반환
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("프로젝트 할 일을 찾을 수 없습니다.");
         }

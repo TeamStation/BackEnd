@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 // 할 일 데이터 정보를 전달하는 DTO
-public class TodoDTO {
+public class TodoDto {
     private Long id;
     private String todoName;
     private LocalDateTime todoRegDate;
@@ -19,7 +19,7 @@ public class TodoDTO {
     private LocalDateTime todoDeadLine;
     private TodoState todoState;
 
-    public Todo toEntity(TodoDTO todoDTO) {
+    public Todo toEntity(TodoDto todoDTO) {
         Todo todo = new Todo();
         todo.setId(todoDTO.getId());
         todo.setTodoName(todoDTO.getTodoName());
@@ -31,8 +31,8 @@ public class TodoDTO {
         return todo;
     }
 
-    public static TodoDTO toDTO(Todo todo) {
-        TodoDTO todoDTO = new TodoDTO();
+    public static TodoDto toDTO(Todo todo) {
+        TodoDto todoDTO = new TodoDto();
         todoDTO.setId(todo.getId());
         todoDTO.setTodoName(todo.getTodoName());
         todoDTO.setTodoRegDate(todo.getTodoRegDate());

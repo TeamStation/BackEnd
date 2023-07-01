@@ -1,7 +1,6 @@
 package com.teamstation.teamstation.entity;
 
 import com.teamstation.teamstation.constant.TodoState;
-import com.teamstation.teamstation.dto.TodoDTO;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

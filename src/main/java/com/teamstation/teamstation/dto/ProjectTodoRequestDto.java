@@ -6,7 +6,7 @@ import lombok.Builder;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class ProjectTodoRequestDTO {
+public class ProjectTodoRequestDto {
     private String todoName;
     private List<Long> memberIds;
     private String category;
@@ -32,12 +32,12 @@ public class ProjectTodoRequestDTO {
         return todoState;
     }
 
-    public ProjectTodoRequestDTO() {
+    public ProjectTodoRequestDto() {
     }
 
 
     @Builder
-    public ProjectTodoRequestDTO(String todoName, List<Long> memberIds, String category, LocalDateTime todoDeadLine, TodoState todoState) {
+    public ProjectTodoRequestDto(String todoName, List<Long> memberIds, String category, LocalDateTime todoDeadLine, TodoState todoState) {
         this.todoName = todoName;
         this.memberIds = memberIds;
         this.category = category;

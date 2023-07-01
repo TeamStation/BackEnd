@@ -1,10 +1,10 @@
 package com.teamstation.teamstation.dto;
 
-public class ProjectDTO {
+public class ProjectDto {
     private Long id;
     private String name;
 
-    public ProjectDTO() {
+    public ProjectDto() {
         // 기본 생성자 추가
     }
 

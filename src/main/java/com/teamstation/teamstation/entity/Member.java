@@ -1,18 +1,31 @@
 package com.teamstation.teamstation.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
-import javax.persistence.Id;
 
 @Entity
-@Getter
-@Setter
+@Table(name = "member")
+@Getter @Setter
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Member {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String name;
+    @Column(unique = true)
+    private String email;
+
+    private String password;
+
+    private String userName;
+
+    public void encodePassword(PasswordEncoder passwordEncoder) {
+        this.password = passwordEncoder.encode(password);
+    }
 }

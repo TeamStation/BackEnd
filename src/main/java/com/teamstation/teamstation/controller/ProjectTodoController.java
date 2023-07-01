@@ -59,7 +59,7 @@ public class ProjectTodoController {
             todoMap.put("todoName", todo.getTodo().getTodoName());
             todoMap.put("category", todo.getCategory());
             todoMap.put("deadlineTime", todo.getTodo().getTodoDeadLine());
-            todoMap.put("members", todo.getMembers().stream().map(Member::getName).collect(Collectors.toList()));
+            todoMap.put("members", todo.getMembers().stream().map(Member::getUserName).collect(Collectors.toList()));
             todoMap.put("todoState", todo.getTodo().getTodoState());
 
             result.add(todoMap);

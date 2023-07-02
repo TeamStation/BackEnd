@@ -23,9 +23,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/member/signin").permitAll()
-                .antMatchers("/member/signup").permitAll()
-                .anyRequest().authenticated();
+                //.antMatchers("/api/member/login").permitAll()
+                //.antMatchers("/api/member/signup").permitAll()
+                //.anyRequest().authenticated();
+                .anyRequest().permitAll();
     }
 
     @Bean

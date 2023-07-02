@@ -13,7 +13,7 @@ public class MemberDto {
     private Long id;
     private String email;
 
-    private String userName;
+    private String memberName;
 
     public Long getId() {
         return id;
@@ -23,11 +23,11 @@ public class MemberDto {
         this.id = id;
     }
 
-    public String getName() {
-        return userName;
+    public String getMemberName() {
+        return memberName;
     }
 
-    public void setName(String userName) {
-        this.userName = userName;
+    public void setName(String memberName) {
+        this.memberName = memberName;
     }
 }

@@ -5,11 +5,14 @@ import com.teamstation.teamstation.entity.Member;
 import com.teamstation.teamstation.repository.MemberRepository;
 import com.teamstation.teamstation.dto.MemberSignUpRequestDto;
 import com.teamstation.teamstation.service.MemberService;
+import com.teamstation.teamstation.token.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
+import java.util.Map;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -19,6 +22,7 @@ public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Override
     public MemberDto signUp(MemberSignUpRequestDto requestDto) throws Exception {
@@ -32,8 +36,9 @@ public class MemberServiceImpl implements MemberService {
         newMember.encodePassword(passwordEncoder);
 
         MemberDto memberDto = new MemberDto();
+        memberDto.setId(newMember.getId());
         memberDto.setEmail(newMember.getEmail());
-        memberDto.setUserName(newMember.getUserName());
+        memberDto.setMemberName(newMember.getMemberName());
 
         return memberDto;
     }
@@ -47,10 +52,22 @@ public class MemberServiceImpl implements MemberService {
 
     public Member getMemberById(Long memberId) {
         Optional<Member> optionalMember = memberRepository.findById(memberId);
-        if (!optionalMember.isPresent()) {
+        if (optionalMember.isEmpty()) {
             // 멤버가 존재하지 않을 경우 예외 처리
             throw new IllegalArgumentException("멤버를 찾을 수 없습니다.");
         }
         return optionalMember.get();
+    }
+
+    @Override
+    public String login(Map<String, String> member) {
+        Member loginMember = memberRepository.findByEmail(member.get("email"))
+                .orElseThrow(() -> new EntityNotFoundException("가입되지 않은 Email 입니다."));
+        String password = member.get("password");
+        if (!passwordEncoder.matches(member.get("password"), loginMember.getPassword())) {
+            throw new IllegalArgumentException("잘못된 비밀번호입니다.");
+        }
+
+        return jwtTokenProvider.createToken(loginMember.getUsername());
     }
 }

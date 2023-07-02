@@ -16,7 +16,7 @@ public class MemberSignUpRequestDto {
 
     private String password;
 
-    private String userName;
+    private String memberName;
 
     private String checkedPassword;
 
@@ -25,7 +25,7 @@ public class MemberSignUpRequestDto {
         return Member.builder()
                 .email(email)
                 .password(password)
-                .userName(userName)
+                .memberName(memberName)
                 .build();
     }
 

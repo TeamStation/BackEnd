@@ -1,4 +1,4 @@
 package com.teamstation.teamstation.service;
 
-public class CustomUserServiceDetail {
+public class CustomUserDetailService {
 }

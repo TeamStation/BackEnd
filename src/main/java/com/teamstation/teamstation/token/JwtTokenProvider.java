@@ -1,2 +1,6 @@
-package com.teamstation.teamstation.token;public class JwtTokenProvider {
+package com.teamstation.teamstation.token;
+
+@RequiredArgsConstructor
+@Component
+public class JwtTokenProvider {
 }

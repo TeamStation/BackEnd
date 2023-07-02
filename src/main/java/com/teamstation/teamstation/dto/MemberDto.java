@@ -10,8 +10,24 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MemberDto {
-
+    private Long id;
     private String email;
 
-    private String userName;
+    private String memberName;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getMemberName() {
+        return memberName;
+    }
+
+    public void setName(String memberName) {
+        this.memberName = memberName;
+    }
 }

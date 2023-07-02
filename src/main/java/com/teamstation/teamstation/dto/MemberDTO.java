@@ -1,19 +1,13 @@
 package com.teamstation.teamstation.dto;
 
-import lombok.AllArgsConstructor;
+import com.teamstation.teamstation.entity.Member;
 import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
-public class MemberDto {
+public class MemberDTO {
     private Long id;
-    private String email;
-
-    private String userName;
+    private String name;
 
     public Long getId() {
         return id;
@@ -24,10 +18,10 @@ public class MemberDto {
     }
 
     public String getName() {
-        return userName;
+        return name;
     }
 
-    public void setName(String userName) {
-        this.userName = userName;
+    public void setName(String name) {
+        this.name = name;
     }
 }

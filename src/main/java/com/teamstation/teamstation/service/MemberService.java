@@ -9,6 +9,6 @@ public interface MemberService {
      // 회원가입
      MemberDto signUp(MemberSignUpRequestDto requestDto) throws Exception;
 
-     Member getMemberById(Long memberId);
+    Member getMemberById(Long memberId);
 
 }

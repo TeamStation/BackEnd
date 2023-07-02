@@ -44,4 +44,13 @@ public class MemberServiceImpl implements MemberService {
             throw new IllegalStateException("이미 가입된 회원입니다.");
         }
     }
+
+    public Member getMemberById(Long memberId) {
+        Optional<Member> optionalMember = memberRepository.findById(memberId);
+        if (!optionalMember.isPresent()) {
+            // 멤버가 존재하지 않을 경우 예외 처리
+            throw new IllegalArgumentException("멤버를 찾을 수 없습니다.");
+        }
+        return optionalMember.get();
+    }
 }

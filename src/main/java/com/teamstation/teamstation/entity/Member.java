@@ -18,6 +18,7 @@ import java.util.Collection;
 public class Member implements UserDetails {
 
     @Id
+    @Column(name = "member_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 

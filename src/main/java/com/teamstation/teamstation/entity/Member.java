@@ -12,8 +12,7 @@ import java.util.Collection;
 @Table(name = "member")
 @Getter @Setter
 @ToString
-@AllArgsConstructor
-@NoArgsConstructor
+@RequiredArgsConstructor
 @Builder
 public class Member implements UserDetails {
 
@@ -28,6 +27,14 @@ public class Member implements UserDetails {
     private String password;
 
     private String memberName;
+
+    public static Member createMember(String email, String password, String memberName) {
+        Member member = new Member();
+        member.email = email;
+        member.password = password;
+        member.memberName = memberName;
+        return member;
+    }
 
     public void encodePassword(PasswordEncoder passwordEncoder){
         this.password = passwordEncoder.encode(password);

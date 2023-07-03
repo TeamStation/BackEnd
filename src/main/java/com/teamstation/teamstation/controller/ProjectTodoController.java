@@ -82,7 +82,7 @@ public class ProjectTodoController {
         todo.setTodoState(requestDTO.getTodoState());
         // Set other fields of Todo
 
-        Todo savedTodo = todoService.createTodo(todo);
+        Todo savedTodo = todoService.saveTodo(todo);
 
         // 3. 멤버 조회
         List<Member> members = new ArrayList<>();

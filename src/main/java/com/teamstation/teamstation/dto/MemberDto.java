@@ -1,5 +1,6 @@
 package com.teamstation.teamstation.dto;
 
+import com.teamstation.teamstation.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,7 +14,7 @@ public class MemberDto {
     private Long id;
     private String email;
 
-    private String memberName;
+    private String userName;
 
     public Long getId() {
         return id;
@@ -23,11 +24,21 @@ public class MemberDto {
         this.id = id;
     }
 
-    public String getMemberName() {
-        return memberName;
+    public String getName() {
+        return userName;
     }
 
-    public void setName(String memberName) {
-        this.memberName = memberName;
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+
+    public Member toEntity() {
+        Member member = new Member();
+        member.setId(this.id);
+        member.setUserName(this.userName);
+        member.setEmail(this.email);
+
+        return member;
     }
 }

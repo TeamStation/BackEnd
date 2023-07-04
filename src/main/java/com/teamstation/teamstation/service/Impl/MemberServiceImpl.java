@@ -5,12 +5,12 @@ import com.teamstation.teamstation.entity.Member;
 import com.teamstation.teamstation.repository.MemberRepository;
 import com.teamstation.teamstation.dto.MemberSignUpRequestDto;
 import com.teamstation.teamstation.service.MemberService;
-import com.teamstation.teamstation.token.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import javax.persistence.EntityNotFoundException;
 import java.util.Map;
 import java.util.Optional;
@@ -22,7 +22,6 @@ public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
-    private final JwtTokenProvider jwtTokenProvider;
 
     @Override
     public MemberDto signUp(MemberSignUpRequestDto requestDto) throws Exception {
@@ -57,6 +56,11 @@ public class MemberServiceImpl implements MemberService {
             throw new IllegalArgumentException("멤버를 찾을 수 없습니다.");
         }
         return optionalMember.get();
+    }
+
+    public List<Member> getMembersByIds(List<Long> memberIds) {
+        List<Member> members = memberRepository.findByIdIn(memberIds);
+        return members;
     }
 
     @Override

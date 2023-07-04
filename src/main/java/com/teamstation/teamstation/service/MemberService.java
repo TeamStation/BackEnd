@@ -1,9 +1,11 @@
 package com.teamstation.teamstation.service;
 
+import com.teamstation.teamstation.dto.MemberDto;
 import com.teamstation.teamstation.dto.MemberSignUpRequestDto;
 import com.teamstation.teamstation.entity.Member;
 
 import java.util.List;
+import java.util.Map;
 
 public interface MemberService {
 
@@ -12,4 +14,6 @@ public interface MemberService {
 
     Member getMemberById(Long memberId);
     List<Member> getMembersByIds(List<Long> memberIds);
+
+    String login(Map<String, String> member);
 }

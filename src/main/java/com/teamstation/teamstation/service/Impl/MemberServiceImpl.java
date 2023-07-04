@@ -1,6 +1,5 @@
 package com.teamstation.teamstation.service.Impl;
 
-import com.teamstation.teamstation.dto.MemberDto;
 import com.teamstation.teamstation.entity.Member;
 import com.teamstation.teamstation.repository.MemberRepository;
 import com.teamstation.teamstation.dto.MemberSignUpRequestDto;

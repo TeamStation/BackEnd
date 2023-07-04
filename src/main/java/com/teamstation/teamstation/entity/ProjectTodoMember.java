@@ -9,9 +9,33 @@ public class ProjectTodoMember {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "member_id")
     private Member member;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "project_todo_id")
     private ProjectTodo projectTodo;
+
+    public void setMember(Member member) {
+        this.member = member;
+    }
+
+    public void setProjectTodo(ProjectTodo projectTodo) {
+        this.projectTodo = projectTodo;
+    }
+
+    public Member getMember() {
+        return member;
+    }
+
+    public ProjectTodo getProjectTodo() {
+        return projectTodo;
+    }
+    public ProjectTodoMember() {
+    }
+    public ProjectTodoMember(Member member, ProjectTodo projectTodo) {
+        this.member = member;
+        this.projectTodo = projectTodo;
+    }
 }

@@ -1,6 +1,6 @@
 package com.teamstation.teamstation.entity;
 
-import com.teamstation.teamstation.dto.MemberDTO;
+import com.teamstation.teamstation.dto.MemberDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,7 +24,7 @@ public class ProjectTodo {
     @ManyToOne
     private Project project;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST)
     private List<Member> members;
 
     private String category;

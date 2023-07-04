@@ -1,9 +1,11 @@
 package com.teamstation.teamstation.service.Impl;
 
+import com.teamstation.teamstation.dto.MemberDto;
 import com.teamstation.teamstation.entity.Member;
 import com.teamstation.teamstation.repository.MemberRepository;
 import com.teamstation.teamstation.dto.MemberSignUpRequestDto;
 import com.teamstation.teamstation.service.MemberService;
+import com.teamstation.teamstation.token.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,7 @@ public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Override
     public MemberDto signUp(MemberSignUpRequestDto requestDto) throws Exception {

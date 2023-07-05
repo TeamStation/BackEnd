@@ -19,7 +19,6 @@ public class TodoDto {
     private LocalDateTime todoDeadLine;
     private TodoState todoState;
 
-
     public Todo toEntity(TodoDto todoDTO) {
         Todo todo = new Todo();
         todo.setId(todoDTO.getId());

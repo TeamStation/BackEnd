@@ -9,13 +9,12 @@ import java.util.Map;
 
 public interface MemberService {
 
-     // 회원가입
+    // 회원가입
      MemberDto signUp(MemberSignUpRequestDto requestDto) throws Exception;
 
     Member getMemberById(Long memberId);
+    List<Member> getMembersByIds(List<Long> memberIds);
 
     String login(Map<String, String> member);
-
-    List<Member> getMembersByIds(List<Long> memberIds);
 
 }

@@ -1,6 +1,5 @@
 package com.teamstation.teamstation.entity;
 
-import com.teamstation.teamstation.dto.MemberDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

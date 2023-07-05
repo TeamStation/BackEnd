@@ -1,8 +1,6 @@
 package com.teamstation.teamstation.service.Impl;
 
-import com.teamstation.teamstation.dto.MemberDto;
 import com.teamstation.teamstation.dto.MemberSignUpRequestDto;
-import com.teamstation.teamstation.entity.Member;
 import com.teamstation.teamstation.service.MemberService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

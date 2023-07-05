@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Map;
@@ -60,6 +61,11 @@ public class MemberServiceImpl implements MemberService {
         return optionalMember.get();
     }
 
+    public List<Member> getMembersByIds(List<Long> memberIds) {
+        List<Member> members = memberRepository.findByIdIn(memberIds);
+        return members;
+    }
+
     @Override
     public String login(Map<String, String> member) {
         Member loginMember = memberRepository.findByEmail(member.get("email"))
@@ -72,9 +78,4 @@ public class MemberServiceImpl implements MemberService {
         return jwtTokenProvider.createToken(loginMember.getUsername());
     }
 
-
-    public List<Member> getMembersByIds(List<Long> memberIds) {
-        List<Member> members = memberRepository.findByIdIn(memberIds);
-        return members;
-    }
 }

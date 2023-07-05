@@ -20,6 +20,9 @@ public class ProjectTodoDto {
         // 기본 생성자 내용 추가
     }
 
+
+
+
     public TodoState getTodoState() {
         return this.todo.getTodoState();
     }

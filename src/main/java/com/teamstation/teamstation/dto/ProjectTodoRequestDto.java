@@ -10,7 +10,7 @@ public class ProjectTodoRequestDto {
     private String todoName;
     private List<Long> memberIds;
     private String category;
-    private LocalDateTime todoDeadLine;
+    private String todoDeadLine;
     private TodoState todoState;
 
     public String getTodoName() {
@@ -24,7 +24,7 @@ public class ProjectTodoRequestDto {
         return category;
     }
 
-    public LocalDateTime getTodoDeadLine() {
+    public String getTodoDeadLine() {
         return todoDeadLine;
     }
 
@@ -37,7 +37,7 @@ public class ProjectTodoRequestDto {
 
 
     @Builder
-    public ProjectTodoRequestDto(String todoName, List<Long> memberIds, String category, LocalDateTime todoDeadLine, TodoState todoState) {
+    public ProjectTodoRequestDto(String todoName, List<Long> memberIds, String category, String todoDeadLine, TodoState todoState) {
         this.todoName = todoName;
         this.memberIds = memberIds;
         this.category = category;

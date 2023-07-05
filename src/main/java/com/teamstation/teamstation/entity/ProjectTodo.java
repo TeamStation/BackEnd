@@ -24,7 +24,7 @@ public class ProjectTodo {
     @ManyToOne
     private Project project;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST)
     private List<Member> members;
 
     private String category;

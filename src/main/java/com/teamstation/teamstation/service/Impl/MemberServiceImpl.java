@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -69,5 +70,11 @@ public class MemberServiceImpl implements MemberService {
         }
 
         return jwtTokenProvider.createToken(loginMember.getUsername());
+    }
+
+
+    public List<Member> getMembersByIds(List<Long> memberIds) {
+        List<Member> members = memberRepository.findByIdIn(memberIds);
+        return members;
     }
 }

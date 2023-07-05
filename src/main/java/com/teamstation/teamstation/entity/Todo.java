@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @Setter
 public class Todo {
     @Id
+    @Column(name = "todo_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

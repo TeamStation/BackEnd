@@ -35,7 +35,10 @@ public class ProjectTodoService {
         return projectTodoRepository.save(projectTodo);
     }
 
-    // 수정, 삭제 메소드 추가 구현
+    @Transactional
+    public void deleteProjectTodo(Long id) {
+        projectTodoRepository.deleteById(id);
+    }
 }
 
 

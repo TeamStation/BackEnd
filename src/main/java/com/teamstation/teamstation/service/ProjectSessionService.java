@@ -32,4 +32,8 @@ public class ProjectSessionService {
         projectSessionRepository.delete(projectSession);
     }
 
+    public ProjectSession updateProjectSession(ProjectSession projectSession) {
+        return projectSessionRepository.save(projectSession);
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.teamstation.teamstation.service.Impl;
 
+import com.teamstation.teamstation.dto.MemberDto;
 import com.teamstation.teamstation.dto.MemberSignUpRequestDto;
 import com.teamstation.teamstation.service.MemberService;
 import org.junit.jupiter.api.DisplayName;
@@ -22,7 +23,7 @@ class MemberServiceImplTest {
     public MemberSignUpRequestDto createMember(){
         MemberSignUpRequestDto memberDto = new MemberSignUpRequestDto();
         memberDto.setEmail("test@email.com");
-        memberDto.setUserName("홍길동");
+        memberDto.setMemberName("홍길동");
         memberDto.setPassword("1234");
         memberDto.setCheckedPassword("1234");
         return memberDto;
@@ -31,7 +32,7 @@ class MemberServiceImplTest {
     public MemberSignUpRequestDto createMember2(){
         MemberSignUpRequestDto memberDto = new MemberSignUpRequestDto();
         memberDto.setEmail("test@email.com");
-        memberDto.setUserName("홍길동");
+        memberDto.setMemberName("홍길동");
         memberDto.setPassword("1234");
         memberDto.setCheckedPassword("12345");
         return memberDto;
@@ -44,7 +45,7 @@ class MemberServiceImplTest {
         MemberDto savedMember = memberService.signUp(member);
 
         assertEquals(member.toEntity().getEmail(), savedMember.getEmail());
-        assertEquals(member.toEntity().getUserName(), savedMember.getUserName());
+        assertEquals(member.toEntity().getMemberName(), savedMember.getMemberName());
     }
 
     @Test

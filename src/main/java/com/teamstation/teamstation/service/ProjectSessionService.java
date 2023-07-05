@@ -24,4 +24,12 @@ public class ProjectSessionService {
         return projectSessionRepository.findByProject(project);
     }
 
+    public ProjectSession getProjectSessionById(Long sessionId) {
+        return projectSessionRepository.findById(sessionId).orElse(null);
+    }
+
+    public void deleteProjectSession(ProjectSession projectSession) {
+        projectSessionRepository.delete(projectSession);
+    }
+
 }

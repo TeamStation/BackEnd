@@ -97,4 +97,47 @@ public class SessionController {
 
         return ResponseEntity.ok(createdProjectSession);
     }
+
+    @DeleteMapping("/{userId}/project/{projectId}/session/{sessionId}")
+    public ResponseEntity<Void> deleteProjectSession(
+            @PathVariable Long userId,
+            @PathVariable Long projectId,
+            @PathVariable Long sessionId
+    ) {
+        // 1. 유저 조회
+        Member user = memberService.getMemberById(userId);
+        if (user == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        // 2. 프로젝트 조회
+        Project project = projectService.getProjectById(projectId);
+        if (project == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        // 3. 세션 조회
+        ProjectSession projectSession = projectSessionService.getProjectSessionById(sessionId);
+        if (projectSession == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        // 4. 사용자가 프로젝트에 속해 있는지 확인
+        if (!projectService.isUserInProject(user, project)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
+        // 5. 프로젝트와 세션의 연관 관계 확인
+        if (!projectSession.getProject().equals(project)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
+        // 6. 회의 삭제
+        projectSessionService.deleteProjectSession(projectSession);
+
+        return ResponseEntity.noContent().build();
+    }
+
+
+
 }

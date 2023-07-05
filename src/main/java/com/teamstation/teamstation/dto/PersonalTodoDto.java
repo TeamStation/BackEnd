@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter @Setter
 public class PersonalTodoDto {
 
-    private Long personalTodoId;
+    private Long todoId;
 
     private String category;
 }

@@ -111,9 +111,9 @@ public class ProjectTodoController {
         todo.setTodoName(requestDto.getTodoName());
         // todo.setTodoDeadLine(requestDto.getTodoDeadLine());
         if (requestDto.getTodoDeadLine() != null) {
-            String todoDeadLineString = requestDto.getTodoDeadLine();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-            LocalDateTime todoDeadLine = LocalDateTime.parse(todoDeadLineString, formatter);
+            String todoDeadLine = requestDto.getTodoDeadLine();
+//            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+//            LocalDateTime todoDeadLine = LocalDateTime.parse(todoDeadLineString, formatter);
             todo.setTodoDeadLine(todoDeadLine);
         }
         todo.setTodoState(requestDto.getTodoState());
@@ -264,9 +264,9 @@ public class ProjectTodoController {
 
         // todoDeadLine 값 업데이트
         if (projectTodoRequestDto.getTodoDeadLine() != null) {
-            String todoDeadLineString = projectTodoRequestDto.getTodoDeadLine();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-            LocalDateTime todoDeadLine = LocalDateTime.parse(todoDeadLineString, formatter);
+            String todoDeadLine = projectTodoRequestDto.getTodoDeadLine();
+//            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+//            LocalDateTime todoDeadLine = LocalDateTime.parse(todoDeadLineString, formatter);
             projectTodo.getTodo().setTodoDeadLine(todoDeadLine);
         }
 

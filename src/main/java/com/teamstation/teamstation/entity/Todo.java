@@ -1,18 +1,15 @@
 package com.teamstation.teamstation.entity;
 
 import com.teamstation.teamstation.constant.TodoState;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@NoArgsConstructor
-@Getter
-@Setter
+@Table(name = "todo")
+@Getter @Setter
+@ToString
 public class Todo {
     @Id
     @Column(name = "todo_id")
@@ -25,18 +22,23 @@ public class Todo {
 
     private LocalDateTime todoUpdateDate;
 
-    private LocalDateTime todoDeadLine;
+    private String todoDeadLine;
 
     @Enumerated(EnumType.STRING)
     private TodoState todoState;
 
-    @Builder
-    public Todo(Long id, String todoName, LocalDateTime todoRegDate, LocalDateTime todoUpdateDate, LocalDateTime todoDeadLine, TodoState todoState) {
-        this.id = id;
-        this.todoName = todoName;
-        this.todoRegDate = todoRegDate;
-        this.todoUpdateDate = todoUpdateDate;
-        this.todoDeadLine = todoDeadLine;
-        this.todoState = todoState;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
+
+    public Todo createTodo(String todoName, String todoDeadLine, TodoState todoState, Member member) {
+        Todo todo = new Todo();
+        todo.todoName = todoName;
+//        todo.todoRegDate = todoRegDate;
+//        todo.todoUpdateDate = todoUpdateDate;
+        todo.todoDeadLine = todoDeadLine;
+        todo.todoState = todoState;
+        todo.member = member;
+        return todo;
     }
 }

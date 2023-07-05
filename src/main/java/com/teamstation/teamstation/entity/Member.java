@@ -12,7 +12,8 @@ import java.util.Collection;
 @Table(name = "member")
 @Getter @Setter
 @ToString
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class Member implements UserDetails {
 

@@ -19,26 +19,26 @@ public class TodoDto {
     private LocalDateTime todoDeadLine;
     private TodoState todoState;
 
-    public Todo toEntity() {
+    public Todo toEntity(TodoDto todoDTO) {
         Todo todo = new Todo();
-        todo.setId(id);
-        todo.setTodoName(todoName);
-        todo.setTodoRegDate(todoRegDate);
-        todo.setTodoUpdateDate(todoUpdateDate);
-        todo.setTodoDeadLine(todoDeadLine);
-        todo.setTodoState(todoState);
+        todo.setId(todoDTO.getId());
+        todo.setTodoName(todoDTO.getTodoName());
+        todo.setTodoRegDate(todoDTO.getTodoRegDate());
+        todo.setTodoUpdateDate(todoDTO.getTodoUpdateDate());
+        todo.setTodoDeadLine(todoDTO.getTodoDeadLine());
+        todo.setTodoState(todoDTO.getTodoState());
 
         return todo;
     }
 
-    public static TodoDto fromEntity(Todo todo) {
-        TodoDto todoDto = new TodoDto();
-        todoDto.setId(todo.getId());
-        todoDto.setTodoName(todo.getTodoName());
-        todoDto.setTodoRegDate(todo.getTodoRegDate());
-        todoDto.setTodoUpdateDate(todo.getTodoUpdateDate());
-        todoDto.setTodoDeadLine(todo.getTodoDeadLine());
-        todoDto.setTodoState(todo.getTodoState());
-        return todoDto;
+    public static TodoDto toDTO(Todo todo) {
+        TodoDto todoDTO = new TodoDto();
+        todoDTO.setId(todo.getId());
+        todoDTO.setTodoName(todo.getTodoName());
+        todoDTO.setTodoRegDate(todo.getTodoRegDate());
+        todoDTO.setTodoUpdateDate(todo.getTodoUpdateDate());
+        todoDTO.setTodoDeadLine(todo.getTodoDeadLine());
+        todoDTO.setTodoState(todo.getTodoState());
+        return todoDTO;
     }
 }

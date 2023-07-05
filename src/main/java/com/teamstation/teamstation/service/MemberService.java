@@ -16,4 +16,5 @@ public interface MemberService {
     List<Member> getMembersByIds(List<Long> memberIds);
 
     String login(Map<String, String> member);
+
 }

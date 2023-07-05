@@ -18,6 +18,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -107,10 +109,16 @@ public class ProjectTodoController {
         // 3. 할 일 생성
         Todo todo = new Todo();
         todo.setTodoName(requestDto.getTodoName());
-        todo.setTodoDeadLine(requestDto.getTodoDeadLine());
+        // todo.setTodoDeadLine(requestDto.getTodoDeadLine());
+        if (requestDto.getTodoDeadLine() != null) {
+            String todoDeadLineString = requestDto.getTodoDeadLine();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+            LocalDateTime todoDeadLine = LocalDateTime.parse(todoDeadLineString, formatter);
+            todo.setTodoDeadLine(todoDeadLine);
+        }
         todo.setTodoState(requestDto.getTodoState());
 
-        Todo savedTodo = todoService.saveTodo(todo);
+        Todo savedTodo = todoService.createTodo(todo);
 
         // 4. 멤버 조회
         List<Member> members = memberService.getMembersByIds(requestDto.getMemberIds());
@@ -234,7 +242,7 @@ public class ProjectTodoController {
                 }
             }
 
-            // 기존 멤버를 대체하는 대신, 매핑된 멤버 목록을 모두 삭제하고 새로운 멤버 목록을 추가합니다.
+            // 매핑된 멤버 목록을 모두 삭제하고 새로운 멤버 목록을 추가
             projectTodo.setMembers(newMembers);
         }
 
@@ -247,14 +255,22 @@ public class ProjectTodoController {
         if (projectTodoRequestDto.getTodoName() != null) {
             projectTodo.getTodo().setTodoName(projectTodoRequestDto.getTodoName());
         }
-        if (projectTodoRequestDto.getTodoDeadLine() != null) {
-            projectTodo.getTodo().setTodoDeadLine(projectTodoRequestDto.getTodoDeadLine());
-        }
+//        if (projectTodoRequestDto.getTodoDeadLine() != null) {
+//            projectTodo.getTodo().setTodoDeadLine(projectTodoRequestDto.getTodoDeadLine());
+//        }
         if (projectTodoRequestDto.getTodoState() != null) {
             projectTodo.getTodo().setTodoState(projectTodoRequestDto.getTodoState());
         }
 
-        // 프로젝트 할 일을 저장합니다.
+        // todoDeadLine 값 업데이트
+        if (projectTodoRequestDto.getTodoDeadLine() != null) {
+            String todoDeadLineString = projectTodoRequestDto.getTodoDeadLine();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+            LocalDateTime todoDeadLine = LocalDateTime.parse(todoDeadLineString, formatter);
+            projectTodo.getTodo().setTodoDeadLine(todoDeadLine);
+        }
+
+        // 프로젝트 할 일을 저장
         projectTodoRepository.save(projectTodo);
 
         return ResponseEntity.ok("프로젝트 할 일이 성공적으로 업데이트되었습니다.");

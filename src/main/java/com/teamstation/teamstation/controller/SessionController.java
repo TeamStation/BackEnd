@@ -10,8 +10,11 @@ import com.teamstation.teamstation.service.MemberService;
 import com.teamstation.teamstation.service.ProjectService;
 import com.teamstation.teamstation.service.ProjectSessionService;
 import com.teamstation.teamstation.service.SessionService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -27,6 +30,36 @@ public class SessionController {
         this.projectSessionService = projectSessionService;
         this.memberService = memberService;
         this.projectService = projectService;
+    }
+
+    // 회의 조회 API
+    @GetMapping(value="/{userId}/project/{projectId}/session")
+    public ResponseEntity<List<ProjectSession>> getProjectSessions(
+            @PathVariable Long userId,
+            @PathVariable Long projectId
+    ) {
+        // 1. 유저 조회
+        Member user = memberService.getMemberById(userId);
+        if (user == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        // 2. 프로젝트 조회
+        Project project = projectService.getProjectById(projectId);
+        if (project == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        // 3. 유저가 프로젝트에 속해 있는지 확인
+        boolean isUserInProject = projectService.isUserInProject(user, project);
+        if (!isUserInProject) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
+        // 4. 프로젝트의 모든 회의 조회
+        List<ProjectSession> projectSessions = projectSessionService.getProjectSessionsByProject(project);
+
+        return ResponseEntity.ok(projectSessions);
     }
 
     // 회의 생성 API

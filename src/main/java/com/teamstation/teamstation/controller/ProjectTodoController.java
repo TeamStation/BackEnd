@@ -65,6 +65,12 @@ public class ProjectTodoController {
             return ResponseEntity.notFound().build();
         }
 
+        // 3. 유저가 프로젝트에 속해 있는지 확인
+        boolean isUserInProject = projectService.isUserInProject(user, project);
+        if (!isUserInProject) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
         // 프로젝트헤 해당하는 할 일 목록 조회
         List<ProjectTodo> todos = projectTodoRepository.findByProjectId(projectId);
         if (todos.isEmpty()) {

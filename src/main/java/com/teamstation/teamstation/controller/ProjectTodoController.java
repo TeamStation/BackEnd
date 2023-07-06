@@ -65,6 +65,12 @@ public class ProjectTodoController {
             return ResponseEntity.notFound().build();
         }
 
+        // 3. 유저가 프로젝트에 속해 있는지 확인
+        boolean isUserInProject = projectService.isUserInProject(user, project);
+        if (!isUserInProject) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
         // 프로젝트헤 해당하는 할 일 목록 조회
         List<ProjectTodo> todos = projectTodoRepository.findByProjectId(projectId);
         if (todos.isEmpty()) {
@@ -106,7 +112,12 @@ public class ProjectTodoController {
             return ResponseEntity.notFound().build();
         }
 
-        // 3. 할 일 생성
+        // 3. 사용자가 프로젝트에 속해 있는지 확인
+        if (!projectService.isUserInProject(user, project)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
+        // 4. 할 일 생성
         Todo todo = new Todo();
         todo.setTodoName(requestDto.getTodoName());
         // todo.setTodoDeadLine(requestDto.getTodoDeadLine());
@@ -120,17 +131,17 @@ public class ProjectTodoController {
 
         Todo savedTodo = todoService.createTodo(todo);
 
-        // 4. 멤버 조회
+        // 5. 멤버 조회
         List<Member> members = memberService.getMembersByIds(requestDto.getMemberIds());
 
-        // 5. 프로젝트 할 일 생성
+        // 6. 프로젝트 할 일 생성
         ProjectTodo projectTodo = new ProjectTodo();
         projectTodo.setTodo(savedTodo);
         projectTodo.setProject(project);
         projectTodo.setMembers(members);
         projectTodo.setCategory(requestDto.getCategory());
 
-        // 6. 멤버와 프로젝트 할 일의 관계 생성
+        // 7. 멤버와 프로젝트 할 일의 관계 생성
         List<ProjectTodoMember> projectTodoMembers = new ArrayList<>();
         for (Member member : members) {
             ProjectTodoMember projectTodoMember = new ProjectTodoMember();
@@ -176,13 +187,18 @@ public class ProjectTodoController {
 
             ProjectTodo projectTodo = optionalProjectTodo.get();
 
-            // 4. 프로젝트 할 일에 연관된 멤버 정보 삭제
+            // 5. 사용자가 프로젝트에 속해 있는지 확인
+            if (!projectService.isUserInProject(user, project)) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+            }
+
+            // 6. 프로젝트 할 일에 연관된 멤버 정보 삭제
             List<ProjectTodoMember> membersToRemove = projectTodoMemberRepository.findByProjectTodo(projectTodo);
             for (ProjectTodoMember member : membersToRemove) {
                 projectTodoMemberRepository.delete(member);
             }
 
-            // 5. 프로젝트 할 일 삭제
+            // 7. 프로젝트 할 일 삭제
             projectTodoRepository.delete(projectTodo);
 
             return ResponseEntity.ok("할 일이 삭제되었습니다.");

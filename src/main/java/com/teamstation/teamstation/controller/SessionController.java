@@ -83,14 +83,19 @@ public class SessionController {
             return ResponseEntity.notFound().build();
         }
 
-        // 3. 세션 생성
+        // 3. 사용자가 프로젝트에 속해 있는지 확인
+        if (!projectService.isUserInProject(user, project)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
+        // 4. 세션 생성
         Session session = new Session();
         session.setSessionName(projectSessionDto.getSession().getSessionName());
         session.setSessionDateTime(projectSessionDto.getSession().getSessionDateTime());
         session.setSessionState(projectSessionDto.getSession().getSessionState());
         sessionService.createSession(session);
 
-        // 4. 프로젝트 세션 생성
+        // 5. 프로젝트 세션 생성
         ProjectSession projectSession = new ProjectSession();
         projectSession.setSession(session);
         projectSession.setProject(project);

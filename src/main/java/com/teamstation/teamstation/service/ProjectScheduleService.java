@@ -23,4 +23,12 @@ public class ProjectScheduleService {
     public List<ProjectSchedule> getProjectSchedulesByProject(Project project) {
         return projectScheduleRepository.findByProject(project);
     }
+
+    public ProjectSchedule getProjectScheduleById(Long scheduleId) {
+        return projectScheduleRepository.findById(scheduleId).orElse(null);
+    }
+
+    public void deleteProjectSchedule(ProjectSchedule projectSchedule) {
+        projectScheduleRepository.delete(projectSchedule);
+    }
 }

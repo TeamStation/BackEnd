@@ -39,4 +39,14 @@ public class TodoDto {
         todoDTO.setTodoState(todo.getTodoState());
         return todoDTO;
     }
+
+    public TodoDto() {
+
+    }
+
+    public TodoDto(Todo todo){
+        this.todoName = todo.getTodoName();
+        this.todoDeadLine = todo.getTodoDeadLine();
+        this.todoState = todo.getTodoState();
+    }
 }

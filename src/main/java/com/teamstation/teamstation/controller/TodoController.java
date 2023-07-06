@@ -44,4 +44,10 @@ public class TodoController {
         return new ResponseEntity<Long>(todoId, HttpStatus.OK);
     }
 
+    @GetMapping("/todos")
+    public List<TodoDto> getTodoList(Principal principal){
+        String email = principal.getName();
+        return todoService.getTodoList(email);
+    }
+
 }

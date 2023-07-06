@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -32,6 +34,16 @@ public class TodoService {
         todo = todo.createTodo(todoDto.getTodoName(), todoDto.getTodoDeadLine(), todoDto.getTodoState(), member);
         todoRepository.save(todo);
         return todo.getId();
+    }
+
+    public List<TodoDto> getTodoList(String email){
+        List<Todo> todoList = todoRepository.findTodoList(email);
+        List<TodoDto> todoDtoList = new ArrayList<>();
+        for (Todo todo : todoList) {
+            TodoDto todoDto = new TodoDto(todo);
+            todoDtoList.add(todoDto);
+        }
+        return todoDtoList;
     }
 
 }

@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api")
 public class ScheduleController {
@@ -25,6 +27,35 @@ public class ScheduleController {
         this.projectService = projectService;
         this.memberService = memberService;
         this.projectScheduleService = projectScheduleService;
+    }
+
+    // 일정 조회 API
+    @GetMapping(value="/{userId}/project/{projectId}/schedule")
+    public ResponseEntity<List<ProjectSchedule>> getProjectSchedules(
+            @PathVariable Long userId,
+            @PathVariable Long projectId
+    ) {
+        // 1. 유저 조회
+        Member user = memberService.getMemberById(userId);
+        if (user == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        // 2. 프로젝트 조회
+        Project project = projectService.getProjectById(projectId);
+        if (project == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        // 3. 사용자가 프로젝트에 속해 있는지 확인
+        if (!projectService.isUserInProject(user, project)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
+        // 4. 프로젝트 일정 조회
+        List<ProjectSchedule> projectSchedules = projectScheduleService.getProjectSchedulesByProject(project);
+
+        return ResponseEntity.ok(projectSchedules);
     }
 
     // 일정 생성 API

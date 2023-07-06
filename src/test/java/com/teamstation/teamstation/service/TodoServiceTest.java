@@ -7,6 +7,7 @@ import com.teamstation.teamstation.entity.Todo;
 import com.teamstation.teamstation.repository.MemberRepository;
 import com.teamstation.teamstation.repository.TodoRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,6 +15,9 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -46,7 +50,16 @@ class TodoServiceTest {
         return todoDto;
     }
 
+    public TodoDto saveTodoDto(int number){
+        TodoDto todoDto = new TodoDto();
+        todoDto.setTodoName("테스트"+number);
+        todoDto.setTodoDeadLine("2023-07-12");
+        todoDto.setTodoState(TodoState.Proceeding);
+        return todoDto;
+    }
+
     @Test
+    @DisplayName("개인 할 일 등록 테스트")
     public void saveTodo() {
         TodoDto todoDto = savedTodoDto();
         Member member = savedMember();
@@ -62,5 +75,29 @@ class TodoServiceTest {
         System.out.println(savedTodoName);
 
         assertEquals(todoDtoName, savedTodoName);
+    }
+
+    @Test
+    @DisplayName("개인 할 일 조회 테스트")
+    public void getTodoList(){
+        List<TodoDto> todoDtoList = new ArrayList<>();
+        List<Long> todoIdList = new ArrayList<>();
+        Member member = savedMember();
+
+        for(int i=0; i<10; i++){
+            TodoDto todoDto = saveTodoDto(i);
+            Long todoId = todoService.saveTodo(todoDto, member.getEmail());
+            todoIdList.add(todoId);
+        }
+
+        todoDtoList = todoService.getTodoList(member.getEmail());
+        for(TodoDto todoDto:todoDtoList){
+            System.out.println(todoDto.getTodoName());
+            System.out.println(todoDto.getTodoDeadLine());
+            System.out.println(todoDto.getTodoState().toString());
+        }
+
+        assertEquals(todoDtoList.size(), todoIdList.size());
+
     }
 }

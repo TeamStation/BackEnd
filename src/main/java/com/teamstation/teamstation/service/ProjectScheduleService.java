@@ -31,4 +31,8 @@ public class ProjectScheduleService {
     public void deleteProjectSchedule(ProjectSchedule projectSchedule) {
         projectScheduleRepository.delete(projectSchedule);
     }
+
+    public ProjectSchedule updateProjectSchedule(ProjectSchedule projectSchedule) {
+        return projectScheduleRepository.save(projectSchedule);
+    }
 }

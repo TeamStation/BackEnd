@@ -119,7 +119,7 @@ public class ScheduleController {
         if (projectSchedule == null) {
             return ResponseEntity.notFound().build();
         }
-        
+
         // 4. 사용자가 프로젝트에 속해 있는지 확인
         if (!projectService.isUserInProject(user, project)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
@@ -129,5 +129,47 @@ public class ScheduleController {
         projectScheduleService.deleteProjectSchedule(projectSchedule);
 
         return ResponseEntity.noContent().build();
+    }
+
+    // 일정 수정 API
+    @PostMapping(value="/{userId}/project/{projectId}/schedule/{scheduleId}")
+    public ResponseEntity<ProjectSchedule> updateSchedule(
+            @PathVariable Long userId,
+            @PathVariable Long projectId,
+            @PathVariable Long scheduleId,
+            @RequestBody Schedule schedule
+    ) {
+        // 1. 유저 조회
+        Member user = memberService.getMemberById(userId);
+        if (user == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        // 2. 프로젝트 조회
+        Project project = projectService.getProjectById(projectId);
+        if (project == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        // 3. 일정 조회
+        ProjectSchedule projectSchedule = projectScheduleService.getProjectScheduleById(scheduleId);
+        if (projectSchedule == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        // 4. 사용자가 프로젝트에 속해 있는지 확인
+        if (!projectService.isUserInProject(user, project)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
+        // 5. 일정 수정
+        projectSchedule.getSchedule().setScheduleName(schedule.getScheduleName());
+        projectSchedule.getSchedule().setScheduleStartDate(schedule.getScheduleStartDate());
+        projectSchedule.getSchedule().setScheduleEndDate(schedule.getScheduleEndDate());
+        projectSchedule.getSchedule().setScheduleColor(schedule.getScheduleColor());
+
+        ProjectSchedule updatedProjectSchedule = projectScheduleService.updateProjectSchedule(projectSchedule);
+
+        return ResponseEntity.ok(updatedProjectSchedule);
     }
 }

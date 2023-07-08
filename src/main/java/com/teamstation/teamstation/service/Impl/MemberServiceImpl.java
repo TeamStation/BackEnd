@@ -1,6 +1,7 @@
 package com.teamstation.teamstation.service.Impl;
 
 import com.teamstation.teamstation.dto.MemberDto;
+import com.teamstation.teamstation.dto.MemberUpdateDto;
 import com.teamstation.teamstation.entity.Member;
 import com.teamstation.teamstation.repository.MemberRepository;
 import com.teamstation.teamstation.dto.MemberSignUpRequestDto;
@@ -11,11 +12,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.*;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Transactional
@@ -64,6 +63,43 @@ public class MemberServiceImpl implements MemberService {
     public List<Member> getMembersByIds(List<Long> memberIds) {
         List<Member> members = memberRepository.findByIdIn(memberIds);
         return members;
+    }
+
+    @Override
+    public MemberDto getMember(Long id) {
+        Optional<Member> member = memberRepository.findById(id);
+        MemberDto memberDto = new MemberDto();
+        if(member.isPresent()){
+            memberDto.setId(member.get().getId());
+            memberDto.setMemberName(member.get().getMemberName());
+            memberDto.setEmail(member.get().getEmail());
+        }
+        return memberDto;
+    }
+
+    @Override
+    public MemberUpdateDto updateMember(MemberUpdateDto memberUpdateDto, Long memberId) {
+        Optional<Member> member = memberRepository.findById(memberId);
+
+        if(member.isEmpty()){
+            throw new EntityNotFoundException("회원이 존재하지 않습니다");
+        }
+
+        member.get().setEmail(memberUpdateDto.getEmail());
+        member.get().setMemberName(memberUpdateDto.getMemberName());
+
+        MemberUpdateDto updatedMember = new MemberUpdateDto();
+
+        updatedMember.setEmail(member.get().getEmail());
+        updatedMember.setMemberName(member.get().getMemberName());
+
+        return updatedMember;
+    }
+
+    @Override
+    public void deleteMember(Long id) throws Exception {
+        Optional<Member> member = memberRepository.findById(id);
+        member.ifPresent(memberRepository::delete);
     }
 
     @Override

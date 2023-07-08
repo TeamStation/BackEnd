@@ -39,6 +39,9 @@ dependencies {
 
 	// model mapper
 	implementation 'org.modelmapper:modelmapper:3.1.1'
+
+	// StringUtils
+	implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
 }
 
 tasks.named('test') {

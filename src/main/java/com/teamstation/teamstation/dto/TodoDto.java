@@ -16,7 +16,7 @@ public class TodoDto {
     private Long id;
     private String todoName;
 //    private LocalDateTime todoRegDate;
-//    private LocalDateTime todoUpdateDate;
+    private LocalDateTime todoUpdateDate;
     private String todoDeadLine;
     private TodoState todoState;
 
@@ -24,7 +24,7 @@ public class TodoDto {
         Todo todo = new Todo();
         todo.setTodoName(todoDTO.getTodoName());
 //        todo.setTodoRegDate(todoDTO.getTodoRegDate());
-//        todo.setTodoUpdateDate(todoDTO.getTodoUpdateDate());
+        todo.setTodoUpdateDate(todoDTO.getTodoUpdateDate());
         todo.setTodoDeadLine(todoDTO.getTodoDeadLine());
         todo.setTodoState(todoDTO.getTodoState());
         return todo;
@@ -34,7 +34,7 @@ public class TodoDto {
         TodoDto todoDTO = new TodoDto();
         todoDTO.setTodoName(todo.getTodoName());
 //        todoDTO.setTodoRegDate(todo.getTodoRegDate());
-//        todoDTO.setTodoUpdateDate(todo.getTodoUpdateDate());
+        todoDTO.setTodoUpdateDate(todo.getTodoUpdateDate());
         todoDTO.setTodoDeadLine(todo.getTodoDeadLine());
         todoDTO.setTodoState(todo.getTodoState());
         return todoDTO;

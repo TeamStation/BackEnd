@@ -25,6 +25,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.testng:testng:7.1.0'
 	testImplementation 'org.projectlombok:lombok:1.18.26'
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.mysql:mysql-connector-j'
@@ -36,6 +37,9 @@ dependencies {
 
 	// jwt
 	implementation "io.jsonwebtoken:jjwt:0.9.1"
+
+	//mail
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
 
 	// model mapper
 	implementation 'org.modelmapper:modelmapper:3.1.1'

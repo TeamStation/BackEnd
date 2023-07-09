@@ -12,6 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -37,6 +38,8 @@ public class TodoController {
         Long todoId;
 
         try{
+            todoDto.setTodoRegDate(LocalDateTime.now());
+            todoDto.setTodoUpdateDate(LocalDateTime.now());
             todoId = todoService.saveTodo(todoDto, email);
         }catch (Exception e){
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -73,6 +76,7 @@ public class TodoController {
         Long updatedTodoId;
 
         try{
+            todoDto.setTodoUpdateDate(LocalDateTime.now());
             updatedTodoId = todoService.updateTodo(todoId, todoDto, principal.getName());
         }catch(Exception e) {
             return new ResponseEntity<String>("할 일 수정 중 에러가 발생했습니다.", HttpStatus.BAD_REQUEST);

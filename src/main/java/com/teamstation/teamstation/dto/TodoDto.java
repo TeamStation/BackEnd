@@ -14,7 +14,7 @@ import org.modelmapper.ModelMapper;
 // 할 일 데이터 정보를 전달하는 DTO
 public class TodoDto {
     private String todoName;
-//    private LocalDateTime todoRegDate;
+    private LocalDateTime todoRegDate;
     private LocalDateTime todoUpdateDate;
     private String todoDeadLine;
     private TodoState todoState;

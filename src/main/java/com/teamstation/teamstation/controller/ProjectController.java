@@ -8,10 +8,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -37,6 +37,7 @@ public class ProjectController {
         Long projectId;
 
         try{
+            projectDto.setUpdateDate(LocalDateTime.now());
             projectId = projectService.saveProject(projectDto, email);
         }catch(Exception e){
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);

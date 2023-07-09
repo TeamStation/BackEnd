@@ -82,7 +82,7 @@ public class TodoController {
     }
 
     @DeleteMapping("/{personalTodoId}")
-    public @ResponseBody ResponseEntity deleteTodo(@RequestParam("personalTodo") Long todoId, BindingResult bindingResult, Principal principal) {
+    public @ResponseBody ResponseEntity deleteTodo(@RequestParam("personalTodo") Long todoId, Principal principal) {
         if(!todoService.validateTodo(todoId, principal.getName())){
             return new ResponseEntity<String>("삭제 권한이 없습니다.", HttpStatus.FORBIDDEN);
         }

@@ -1,26 +1,15 @@
 package com.teamstation.teamstation.dto;
 
+import com.teamstation.teamstation.constant.ProjectState;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter @Setter
 public class ProjectDto {
     private Long id;
-    private String name;
+    private String projectName;
+    private String projectDetail;
+    private String projectDeadLine;
+    private ProjectState projectState;
 
-    public ProjectDto() {
-        // 기본 생성자 추가
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

@@ -1,5 +1,6 @@
 package com.teamstation.teamstation.service;
 
+import com.teamstation.teamstation.constant.TodoState;
 import com.teamstation.teamstation.dto.TodoDto;
 import com.teamstation.teamstation.entity.Member;
 import com.teamstation.teamstation.entity.Todo;
@@ -35,14 +36,21 @@ public class TodoService {
         return todo.getId();
     }
 
-    public List<TodoDto> getTodoList(String email){
+    public List<TodoDto> getProceedingTodoList(String email){
         List<Todo> todoList = todoRepository.findTodoList(email);
         List<TodoDto> todoDtoList = new ArrayList<>();
         for (Todo todo : todoList) {
             TodoDto todoDto = new TodoDto(todo);
-            todoDtoList.add(todoDto);
+            if (StringUtils.equals(TodoState.Proceeding.toString(), todoDto.getTodoState().toString())) {
+                todoDtoList.add(todoDto);
+            }
         }
         return todoDtoList;
+    }
+
+    public TodoDto getTodoDtl(Long todoId){
+        Todo todo = todoRepository.findById(todoId).orElseThrow(EntityNotFoundException::new);
+        return new TodoDto(todo);
     }
 
     public boolean validateTodo(Long todoId, String email){

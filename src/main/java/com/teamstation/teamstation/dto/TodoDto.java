@@ -46,6 +46,7 @@ public class TodoDto {
 
     public TodoDto(Todo todo){
         this.todoName = todo.getTodoName();
+        this.todoUpdateDate = todo.getTodoUpdateDate();
         this.todoDeadLine = todo.getTodoDeadLine();
         this.todoState = todo.getTodoState();
     }

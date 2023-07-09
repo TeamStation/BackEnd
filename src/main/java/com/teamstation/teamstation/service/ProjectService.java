@@ -1,25 +1,29 @@
 package com.teamstation.teamstation.service;
 
+import com.teamstation.teamstation.dto.ProjectDto;
 import com.teamstation.teamstation.entity.Member;
 import com.teamstation.teamstation.entity.Project;
 import com.teamstation.teamstation.entity.ProjectMember;
+import com.teamstation.teamstation.repository.MemberRepository;
 import com.teamstation.teamstation.repository.ProjectMemberRepository;
 import com.teamstation.teamstation.repository.ProjectRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
+@Slf4j
 @Service
+@RequiredArgsConstructor
+@Transactional
 public class ProjectService {
     private final ProjectRepository projectRepository;
+    private final MemberRepository memberRepository;
     private final MemberService memberService;
     private final ProjectMemberRepository projectMemberRepository;
-
-    public ProjectService(ProjectRepository projectRepository, MemberService memberService, ProjectMemberRepository projectMemberRepository) {
-        this.projectRepository = projectRepository;
-        this.memberService = memberService;
-        this.projectMemberRepository = projectMemberRepository;
-    }
 
     public Project getProjectById(Long projectId) {
         return projectRepository.findById(projectId).orElse(null);
@@ -36,5 +40,10 @@ public class ProjectService {
             }
         }
         return false;
+    }
+
+    public Long saveProject(ProjectDto projectDto, String email) {
+        Member member = memberRepository.findByEmail(email).orElseThrow(EntityNotFoundException::new);
+        Project project = new Project();
     }
 }

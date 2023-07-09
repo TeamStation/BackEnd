@@ -13,7 +13,6 @@ import org.modelmapper.ModelMapper;
 @Setter
 // 할 일 데이터 정보를 전달하는 DTO
 public class TodoDto {
-    private Long id;
     private String todoName;
 //    private LocalDateTime todoRegDate;
     private LocalDateTime todoUpdateDate;

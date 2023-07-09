@@ -61,9 +61,9 @@ public class TodoService {
         return StringUtils.equals(curMember.getEmail(), savedMember.getEmail());
     }
 
-    public Long updateTodo(TodoDto todoDto, String email){
-        Todo todo = todoRepository.findById(todoDto.getId()).orElseThrow(EntityNotFoundException::new);
-        if (validateTodo(todo.getId(), email)){
+    public Long updateTodo(Long todoId, TodoDto todoDto, String email){
+        Todo todo = todoRepository.findById(todoId).orElseThrow(EntityNotFoundException::new);
+        if (validateTodo(todoId, email)){
             todo.updateTodo(todoDto);
         }
         return todo.getId();

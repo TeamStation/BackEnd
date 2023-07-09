@@ -73,7 +73,7 @@ public class TodoController {
         Long updatedTodoId;
 
         try{
-            updatedTodoId = todoService.updateTodo(todoDto, principal.getName());
+            updatedTodoId = todoService.updateTodo(todoId, todoDto, principal.getName());
         }catch(Exception e) {
             return new ResponseEntity<String>("할 일 수정 중 에러가 발생했습니다.", HttpStatus.BAD_REQUEST);
         }

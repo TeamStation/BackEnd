@@ -69,9 +69,12 @@ public class TodoService {
         return todo.getId();
     }
 
-    public void deleteTodo(Long todoId) {
+    public Long deleteTodo(Long todoId, String email) {
         Todo todo = todoRepository.findById(todoId).orElseThrow(EntityNotFoundException::new);
-        todoRepository.delete(todo);
+        if (validateTodo(todo.getId(), email)){
+            todoRepository.delete(todo);
+        }
+        return todo.getId();
     }
 
 }

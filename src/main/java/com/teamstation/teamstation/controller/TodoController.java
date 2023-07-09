@@ -86,7 +86,7 @@ public class TodoController {
         if(!todoService.validateTodo(todoId, principal.getName())){
             return new ResponseEntity<String>("삭제 권한이 없습니다.", HttpStatus.FORBIDDEN);
         }
-        todoService.deleteTodo(todoId);
+        todoService.deleteTodo(todoId, principal.getName());
         return new ResponseEntity<Long>(todoId, HttpStatus.OK);
     }
 

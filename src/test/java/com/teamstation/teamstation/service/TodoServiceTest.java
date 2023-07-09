@@ -7,6 +7,7 @@ import com.teamstation.teamstation.entity.Todo;
 import com.teamstation.teamstation.repository.MemberRepository;
 import com.teamstation.teamstation.repository.TodoRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,17 +48,30 @@ class TodoServiceTest {
 
     public TodoDto savedTodoDto(){
         TodoDto todoDto = new TodoDto();
+        todoDto.setId(01L);
         todoDto.setTodoName("테스트");
         todoDto.setTodoDeadLine("2023-07-12");
-        todoDto.setTodoState(TodoState.Proceeding);
+        todoDto.setTodoUpdateDate(LocalDateTime.now());
+        LocalDate todoDeadLine = LocalDate.parse(todoDto.getTodoDeadLine(), DateTimeFormatter.ISO_DATE);
+        if (todoDeadLine.isBefore(LocalDate.now())){
+            todoDto.setTodoState(TodoState.Done);
+        } else {
+            todoDto.setTodoState(TodoState.Proceeding);
+        }
         return todoDto;
     }
 
     public TodoDto saveTodoDto(int number){
         TodoDto todoDto = new TodoDto();
         todoDto.setTodoName("테스트"+number);
-        todoDto.setTodoDeadLine("2023-07-12");
-        todoDto.setTodoState(TodoState.Proceeding);
+        todoDto.setTodoDeadLine("2023-07-"+String.format("%02d", number));
+        LocalDate localDateTime = LocalDate.now();
+        LocalDate todoDate = LocalDate.parse(todoDto.getTodoDeadLine(), DateTimeFormatter.ISO_DATE);
+        if (todoDate.isBefore(localDateTime)){
+            todoDto.setTodoState(TodoState.Done);
+        }else{
+            todoDto.setTodoState(TodoState.Proceeding);
+        }
         return todoDto;
     }
 
@@ -78,19 +95,21 @@ class TodoServiceTest {
     }
 
     @Test
-    @DisplayName("개인 할 일 조회 테스트")
+    @DisplayName("개인 할 일 조회 테스트(현재 진행중인 할 일만 추가한 순서대로 조회)")
     public void getTodoList(){
         List<TodoDto> todoDtoList = new ArrayList<>();
         List<Long> todoIdList = new ArrayList<>();
         Member member = savedMember();
 
-        for(int i=0; i<10; i++){
+        for(int i=5; i<15; i++){
             TodoDto todoDto = saveTodoDto(i);
             Long todoId = todoService.saveTodo(todoDto, member.getEmail());
-            todoIdList.add(todoId);
+            if (StringUtils.equals(TodoState.Proceeding.toString(), todoDto.getTodoState().toString())){
+                todoIdList.add(todoId);
+            }
         }
 
-        todoDtoList = todoService.getTodoList(member.getEmail());
+        todoDtoList = todoService.getProceedingTodoList(member.getEmail());
         for(TodoDto todoDto:todoDtoList){
             System.out.println(todoDto.getTodoName());
             System.out.println(todoDto.getTodoDeadLine());
@@ -98,6 +117,38 @@ class TodoServiceTest {
         }
 
         assertEquals(todoDtoList.size(), todoIdList.size());
-
     }
+
+    @Test
+    @DisplayName("개인 할 일 수정 테스트")
+    public void updateTodo(){
+        Member member = savedMember();
+        TodoDto todoDto = savedTodoDto();
+        Long todoId = todoService.saveTodo(todoDto, member.getEmail());
+
+        Todo savedTodo = todoRepository.findById(todoId).orElseThrow(EntityNotFoundException::new);
+        System.out.println(savedTodo);
+
+        todoDto.setTodoName("할 일 수정 테스트");
+        todoDto.setTodoUpdateDate(LocalDateTime.now());
+        todoDto.setTodoState(TodoState.Done);
+
+        Long updatedTodoId = todoService.updateTodo(todoDto, member.getEmail());
+
+        Todo updatedTodo = todoRepository.findById(updatedTodoId).orElseThrow(EntityNotFoundException::new);
+        System.out.println(updatedTodo);
+    }
+
+    @Test
+    @DisplayName("개인 할 일 삭제 테스트")
+    public void deleteTodo() {
+        Member member = savedMember();
+        TodoDto todoDto = savedTodoDto();
+        Long todoId = todoService.saveTodo(todoDto, member.getEmail());
+
+        Long deleteTodoId = todoService.deleteTodo(todoId, member.getEmail());
+
+        assertEquals(todoId, deleteTodoId);
+    }
+
 }

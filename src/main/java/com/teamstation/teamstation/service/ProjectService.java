@@ -100,6 +100,8 @@ public class ProjectService {
         for (ProjectMember member: projectMemberList){
             memberIdList.add(member.getMember().getId());
         }
+        projectDto.setRegDate(project.getRegDate());
+        projectDto.setUpdateDate(project.getUpdateDate());
         projectDto.setProjectMemberIdList(memberIdList);
         return projectDto;
     }

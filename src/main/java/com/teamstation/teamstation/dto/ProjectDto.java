@@ -14,6 +14,7 @@ import java.util.List;
 public class ProjectDto {
     private String name;
     private String detail;
+    private LocalDateTime regDate;
 
     private LocalDateTime updateDate;
     private String deadLine;
@@ -28,7 +29,6 @@ public class ProjectDto {
     public ProjectDto(Project project) {
         this.name = project.getName();
         this.detail = project.getDetail();
-        this.updateDate = project.getUpdateDate();
         this.deadLine = project.getDeadLine();
         this.projectState = project.getProjectState();
     }

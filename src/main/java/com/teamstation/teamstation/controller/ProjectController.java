@@ -59,7 +59,7 @@ public class ProjectController {
         return projectService.getProceedingProjectSize(principal.getName());
     }
 
-    @PostMapping("/projects/proceeding-count")
+    @GetMapping("/projects/done-count")
     public int getProjectDoneCount(Principal principal){
         return projectService.getDoneProjectSize(principal.getName());
     }

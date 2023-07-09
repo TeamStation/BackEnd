@@ -42,8 +42,33 @@ dependencies {
 
 	// StringUtils
 	implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
+
+	// querydsl
+	implementation "com.querydsl:querydsl-apt:4.3.1"
+	implementation "com.querydsl:querydsl-jpa:4.3.1"
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+def querydslSrcDir = 'build/generated'
+sourceSets {
+	main {
+		java {
+			srcDirs += [ querydslSrcDir ]
+		}
+	}
+}
+
+compileJava {
+	options.compilerArgs << '-Aquerydsl.generatedAnnotationClass=javax.annotation.Generated'
+}
+
+tasks.withType(JavaCompile) {
+	options.generatedSourceOutputDirectory = file(querydslSrcDir)
+}
+
+clean {
+	delete file(querydslSrcDir)
 }

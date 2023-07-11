@@ -1,5 +1,6 @@
 package com.teamstation.teamstation.dto;
 
+import com.teamstation.teamstation.constant.Role;
 import com.teamstation.teamstation.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,6 +27,7 @@ public class MemberSignUpRequestDto {
                 .email(email)
                 .password(password)
                 .memberName(memberName)
+                .role(Role.ROLE_USER)
                 .build();
     }
 

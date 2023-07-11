@@ -111,7 +111,7 @@ public class MemberServiceImpl implements MemberService {
             throw new IllegalArgumentException("잘못된 비밀번호입니다.");
         }
 
-        return jwtTokenProvider.createToken(loginMember.getUsername());
+        return jwtTokenProvider.createToken(loginMember.getUsername(), loginMember.getRole());
     }
 
 }

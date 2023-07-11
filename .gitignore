@@ -26,6 +26,7 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 env.properties
+email.properties
 
 ### NetBeans ###
 /nbproject/private/

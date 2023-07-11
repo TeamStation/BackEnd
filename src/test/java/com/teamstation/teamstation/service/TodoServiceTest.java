@@ -48,7 +48,6 @@ class TodoServiceTest {
 
     public TodoDto savedTodoDto(){
         TodoDto todoDto = new TodoDto();
-        todoDto.setId(01L);
         todoDto.setTodoName("테스트");
         todoDto.setTodoDeadLine("2023-07-12");
         todoDto.setTodoUpdateDate(LocalDateTime.now());

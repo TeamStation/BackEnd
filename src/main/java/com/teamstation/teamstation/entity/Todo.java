@@ -2,6 +2,7 @@ package com.teamstation.teamstation.entity;
 
 import com.teamstation.teamstation.constant.TodoState;
 import com.teamstation.teamstation.dto.TodoDto;
+import com.teamstation.teamstation.dto.TodoFormDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -32,21 +33,21 @@ public class Todo {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    public Todo createTodo(String todoName, LocalDateTime todoUpdateDate, String todoDeadLine, TodoState todoState, Member member) {
+    public Todo createTodo(TodoDto todoDto, Member member) {
         Todo todo = new Todo();
-        todo.todoName = todoName;
-//        todo.todoRegDate = todoRegDate;
-        todo.todoUpdateDate = todoUpdateDate;
-        todo.todoDeadLine = todoDeadLine;
-        todo.todoState = todoState;
+        todo.todoName = todoDto.getTodoName();
+        todo.todoRegDate = todoDto.getTodoRegDate();
+        todo.todoUpdateDate = todoDto.getTodoUpdateDate();
+        todo.todoDeadLine = todoDto.getTodoDeadLine();
+        todo.todoState = todoDto.getTodoState();
         todo.member = member;
         return todo;
     }
 
-    public void updateTodo(TodoDto todoDto){
-        this.todoName = todoDto.getTodoName();
-        this.todoUpdateDate = todoDto.getTodoUpdateDate();
-        this.todoDeadLine = todoDto.getTodoDeadLine();
-        this.todoState = todoDto.getTodoState();
+    public void updateTodo(TodoFormDto todoFormDto){
+        this.todoName = todoFormDto.getTodoName();
+        this.todoUpdateDate = LocalDateTime.now();
+        this.todoDeadLine = todoFormDto.getTodoDeadLine();
+        this.todoState = todoFormDto.getTodoState();
     }
 }

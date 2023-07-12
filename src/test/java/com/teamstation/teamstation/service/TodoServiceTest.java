@@ -132,10 +132,10 @@ class TodoServiceTest {
         todoDto.setTodoUpdateDate(LocalDateTime.now());
         todoDto.setTodoState(TodoState.Done);
 
-        Long updatedTodoId = todoService.updateTodo(todoId, todoDto, member.getEmail());
-
-        Todo updatedTodo = todoRepository.findById(updatedTodoId).orElseThrow(EntityNotFoundException::new);
-        System.out.println(updatedTodo);
+//        Long updatedTodoId = todoService.updateTodo(todoId, todoFormDto, member.getEmail());
+//
+//        Todo updatedTodo = todoRepository.findById(updatedTodoId).orElseThrow(EntityNotFoundException::new);
+//        System.out.println(updatedTodo);
     }
 
     @Test

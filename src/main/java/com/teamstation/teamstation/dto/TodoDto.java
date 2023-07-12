@@ -43,10 +43,32 @@ public class TodoDto {
 
     }
 
-    public TodoDto(Todo todo){
-        this.todoName = todo.getTodoName();
-        this.todoUpdateDate = todo.getTodoUpdateDate();
-        this.todoDeadLine = todo.getTodoDeadLine();
-        this.todoState = todo.getTodoState();
+    public TodoDto todoDto(Todo todo){
+        TodoDto todoDto = new TodoDto();
+        todoDto.todoName = todo.getTodoName();
+        todoDto.todoRegDate = LocalDateTime.now();
+        todoDto.todoUpdateDate = LocalDateTime.now();
+        todoDto.todoDeadLine = todo.getTodoDeadLine();
+        todoDto.todoState = todo.getTodoState();
+        return todoDto;
+    }
+
+    public TodoDto updateTodo(TodoFormDto todoFormDto){
+        TodoDto todoDto = new TodoDto();
+        todoDto.todoName = todoFormDto.getTodoName();
+        todoDto.todoUpdateDate = LocalDateTime.now();
+        todoDto.todoDeadLine = todoFormDto.getTodoDeadLine();
+        todoDto.todoState = todoFormDto.getTodoState();
+        return todoDto;
+    }
+
+    public TodoDto createTodo(TodoFormDto todoFormDto){
+        TodoDto todoDto = new TodoDto();
+        todoDto.todoName = todoFormDto.getTodoName();
+        todoDto.todoRegDate = LocalDateTime.now();
+        todoDto.todoUpdateDate = LocalDateTime.now();
+        todoDto.todoDeadLine = todoFormDto.getTodoDeadLine();
+        todoDto.todoState = todoFormDto.getTodoState();
+        return todoDto;
     }
 }

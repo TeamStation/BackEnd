@@ -13,6 +13,7 @@ import javax.persistence.*;
 @Setter
 public class ProjectMember {
     @Id
+    @Column(name = "project_member_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -27,7 +28,7 @@ public class ProjectMember {
     @Enumerated(EnumType.STRING)
     private ProjectMemberRole projectMemberRole;
 
-    public static ProjectMember createProjectMember(Project project, Member member, ProjectMemberRole projectMemberRole) {
+    public ProjectMember createProjectMember(Project project, Member member, ProjectMemberRole projectMemberRole) {
         ProjectMember projectMember = new ProjectMember();
         projectMember.setProject(project);
         projectMember.setMember(member);

@@ -47,18 +47,31 @@ public class ProjectService {
     }
 
     public Long saveProject(ProjectDto projectDto, String curUserEmail) {
-        Project project = projectDto.createProject();
+        List<ProjectMember> projectMembers = new ArrayList<>();
+        Project project = new Project();
+        project = project.createProject(projectDto, projectMembers);
+        log.info("project info: "+project);
         projectRepository.save(project);
-        List<Long> projectMemberList = projectDto.getProjectMemberIdList();
-        for (Long memberId: projectMemberList) {
-            Member member = memberRepository.findById(memberId).orElseThrow(EntityNotFoundException::new);
-            if (StringUtils.equals(curUserEmail, member.getEmail())){
-                ProjectMember projectMember = ProjectMember.createProjectMember(project, member, ProjectMemberRole.ADMIN);
-            } else {
-                // 친구 초대 메일 보내기 로직 추가 필요
+
+        if (!(project.getId()==null)){
+            for(String email:projectDto.getProjectMemberEmailList()){
+                projectMembers.add(saveProjectMember(email, curUserEmail, project));
             }
         }
+        project.setProjectMembers(projectMembers);
         return project.getId();
+    }
+
+    public ProjectMember saveProjectMember(String email, String curUserEmail, Project project){
+        Member member = memberRepository.findByEmail(email).orElseThrow(EntityNotFoundException::new);
+        ProjectMember projectMember = new ProjectMember();
+        if (StringUtils.equals(curUserEmail, email)){
+            projectMemberRepository.save(projectMember.createProjectMember(project, member, ProjectMemberRole.ADMIN));
+        } else {
+            // 친구 초대 메일 보내기 로직 추가 필요
+            log.info("친구 초대 메일 보내기 로직 추가 필요");
+        }
+        return projectMember;
     }
 
     public List<Long> getProjectIdList(String email){
@@ -94,15 +107,15 @@ public class ProjectService {
 
     public ProjectDto getProjectDtl(Long projectId) {
         Project project = projectRepository.findById(projectId).orElseThrow(EntityNotFoundException::new);
-        ProjectDto projectDto = new ProjectDto(project);
+        ProjectDto projectDto = new ProjectDto();
         List<ProjectMember> projectMemberList = projectMemberRepository.findByProjectId(project.getId());
-        List<Long> memberIdList = new ArrayList<>();
+        List<String> memberIdList = new ArrayList<>();
         for (ProjectMember member: projectMemberList){
-            memberIdList.add(member.getMember().getId());
+            memberIdList.add(member.getMember().getEmail());
         }
-        projectDto.setRegDate(project.getRegDate());
-        projectDto.setUpdateDate(project.getUpdateDate());
-        projectDto.setProjectMemberIdList(memberIdList);
+//        projectDto.setRegDate(project.getRegDate());
+//        projectDto.setUpdateDate(project.getUpdateDate());
+        projectDto.setProjectMemberEmailList(memberIdList);
         return projectDto;
     }
 

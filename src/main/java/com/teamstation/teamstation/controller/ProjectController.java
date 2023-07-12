@@ -1,6 +1,8 @@
 package com.teamstation.teamstation.controller;
 
 import com.teamstation.teamstation.dto.ProjectDto;
+import com.teamstation.teamstation.entity.Member;
+import com.teamstation.teamstation.repository.MemberRepository;
 import com.teamstation.teamstation.service.ProjectService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,10 +23,13 @@ import java.util.List;
 @RequestMapping("/api/project")
 public class ProjectController {
 
-    private ProjectService projectService;
+    private final MemberRepository memberRepository;
+    private final ProjectService projectService;
 
-    @PostMapping("/new")
-    public @ResponseBody ResponseEntity saveProject(@RequestBody ProjectDto projectDto, BindingResult bindingResult, Principal principal) {
+    @PostMapping("/{userId}/new")
+    public @ResponseBody ResponseEntity saveProject(@RequestBody ProjectDto projectDto, BindingResult bindingResult,
+                                                    @PathVariable("userId") Long userId) {
+        Member member = memberRepository.findById(userId).orElseThrow(EntityNotFoundException::new);
         if(bindingResult.hasErrors()){
             StringBuilder sb = new StringBuilder();
             List<FieldError> fieldErrors = bindingResult.getFieldErrors();
@@ -33,11 +39,10 @@ public class ProjectController {
             return new ResponseEntity<String>(sb.toString(), HttpStatus.BAD_REQUEST);
         }
 
-        String email = principal.getName();
+        String email = member.getEmail();
         Long projectId;
 
         try{
-            projectDto.setUpdateDate(LocalDateTime.now());
             projectId = projectService.saveProject(projectDto, email);
         }catch(Exception e){
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -45,9 +50,10 @@ public class ProjectController {
         return new ResponseEntity<Long>(projectId, HttpStatus.OK);
     }
 
-    @GetMapping("/projects")
-    public List<Long> getProjectList(Principal principal) {
-        return projectService.getProjectIdList(principal.getName());
+    @GetMapping("/projects/{userId}")
+    public List<Long> getProjectList(@PathVariable("userId") Long userId) {
+        Member member = memberRepository.findById(userId).orElseThrow(EntityNotFoundException::new);
+        return projectService.getProjectIdList(member.getEmail());
     }
 
     @GetMapping("/projects/{projectId}")

@@ -1,6 +1,7 @@
 package com.teamstation.teamstation.controller;
 
 import com.teamstation.teamstation.service.EmailService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +15,7 @@ public class MailController {
         this.emailService = emailService;
     }
 
-    @CrossOrigin(origins = "http://112.146.210.150:3000")
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/emailConfirm")
     public String emailConfirm(@RequestParam String email) throws Exception {
 

@@ -36,13 +36,13 @@ public class Member implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    public static Member createMember(String email, String password, String memberName) {
-        Member member = new Member();
-        member.email = email;
-        member.password = password;
-        member.memberName = memberName;
-        return member;
-    }
+//    public static Member createMember(String email, String password, String memberName) {
+//        Member member = new Member();
+//        member.email = email;
+//        member.password = password;
+//        member.memberName = memberName;
+//        return member;
+//    }
 
     public void encodePassword(PasswordEncoder passwordEncoder){
         this.password = passwordEncoder.encode(password);

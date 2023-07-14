@@ -34,6 +34,7 @@ public class TodoController {
     @PostMapping("/{userId}/new")
     public @ResponseBody ResponseEntity saveTodo(@RequestBody TodoFormDto todoFormDto, BindingResult bindingResult,
                                                  @PathVariable("userId") Long userId) {
+        log.info("saveTodo 들어옴");
         if(bindingResult.hasErrors()){
             StringBuilder sb = new StringBuilder();
             List<FieldError> fieldErrors = bindingResult.getFieldErrors();

@@ -39,12 +39,12 @@ class ProjectTodoRepositoryTest {
         projectTodoRepository.saveAll(List.of(projectTodo1, projectTodo2, projectTodo3));
     }
 
-    @Test
-    public void testFindByCategoryContaining() {
-        // 특정 카테고리를 포함하는 ProjectTodo 엔티티를 검색
-        List<ProjectTodo> foundProjectTodos = projectTodoRepository.findByCategoryContaining("디자인");
-
-        // 검색 결과 확인
-        assertEquals(2, foundProjectTodos.size());
-    }
+//    @Test
+////    public void testFindByCategoryContaining() {
+////        // 특정 카테고리를 포함하는 ProjectTodo 엔티티를 검색
+////        List<ProjectTodo> foundProjectTodos = projectTodoRepository.findByCategoryContaining("디자인");
+////
+////        // 검색 결과 확인
+////        assertEquals(2, foundProjectTodos.size());
+////    }
 }

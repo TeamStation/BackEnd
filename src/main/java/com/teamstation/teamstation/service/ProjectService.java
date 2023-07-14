@@ -53,12 +53,12 @@ public class ProjectService {
         log.info("project info: "+project);
         projectRepository.save(project);
 
-        if (!(project.getId()==null)){
-            for(String email:projectDto.getProjectMemberEmailList()){
-                projectMembers.add(saveProjectMember(email, curUserEmail, project));
-            }
-        }
-        project.setProjectMembers(projectMembers);
+//        if (!(project.getId()==null)){
+//            for(String email:projectDto.getProjectMemberEmailList()){
+//                projectMembers.add(saveProjectMember(email, curUserEmail, project));
+//            }
+//        }
+//        project.setProjectMembers(projectMembers);
         return project.getId();
     }
 

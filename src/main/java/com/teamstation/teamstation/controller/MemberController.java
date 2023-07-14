@@ -21,6 +21,7 @@ public class MemberController {
     private final MemberService memberService;
     private final MemberRepository memberRepository;
 
+    @CrossOrigin(origins = "http://localhost:8080")
     @PostMapping("/signup")
     public ResponseEntity<Object> signup(@RequestBody MemberSignUpRequestDto memberDto) throws Exception {
         try{
@@ -34,6 +35,7 @@ public class MemberController {
     }
 
 
+    @CrossOrigin(origins = "http://localhost:8080")
     @PostMapping("/login")
     public ResponseEntity<Object> login(@RequestBody Map<String, String> member) {
         try {
@@ -45,6 +47,7 @@ public class MemberController {
         }
     }
 
+    @CrossOrigin(origins = "http://localhost:8080")
     @GetMapping()
     public ResponseEntity<Object> getMembers(@PathVariable Long userId) throws Exception {
         try {
@@ -54,6 +57,7 @@ public class MemberController {
         }
     }
 
+    @CrossOrigin(origins = "http://localhost:8080")
     @GetMapping("/{userId}")
     public ResponseEntity<Object> getMember(@PathVariable Long userId) throws Exception {
         try {
@@ -63,6 +67,7 @@ public class MemberController {
         }
     }
 
+    @CrossOrigin(origins = "http://localhost:8080")
     @PostMapping("/update/{memberId}")
     public ResponseEntity<Object> updateMember(@RequestBody MemberUpdateDto memberUpdateDto, @PathVariable Long memberId) {
         try {
@@ -74,6 +79,7 @@ public class MemberController {
         }
     }
 
+    @CrossOrigin(origins = "http://localhost:8080")
     @DeleteMapping("/{userId}")
     public ResponseEntity<Object> deleteMember(@PathVariable Long userId) throws Exception {
         try {

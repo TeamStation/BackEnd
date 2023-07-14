@@ -14,7 +14,7 @@ public class MailController {
         this.emailService = emailService;
     }
 
-    @CrossOrigin(origins = "http://localhost:8080")
+    @CrossOrigin(origins = "http://112.146.210.150:3000")
     @PostMapping("/emailConfirm")
     public String emailConfirm(@RequestParam String email) throws Exception {
 
